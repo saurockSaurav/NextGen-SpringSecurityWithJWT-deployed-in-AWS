@@ -34,7 +34,7 @@ import com.spring.security.jwt.util.UserLoginValidator;
  *
  */
 @RestController
-@RequestMapping("v1/nextcitizen")
+@RequestMapping(value= "v1/nextcitizen" , consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) 
 public class WebLoginController extends WebLoginControllerAssert implements WebLoginControllable {
 	
 	private static final Logger logger = LogManager.getLogger(WebLoginController.class);
@@ -53,7 +53,10 @@ public class WebLoginController extends WebLoginControllerAssert implements WebL
 	 * @return
 	 * @throws Exception
 	 */
-	@PutMapping(path = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
+	
+	
+	
+	@PutMapping(path = "/signup")
 	@Override
 	public ResponseEntity<?> signUpUser( @RequestBody final DefaultRequest defaultRequestForm, final WebRequest request) throws Exception {
 		DefaultReponse signUpReponse = null;
@@ -83,7 +86,7 @@ public class WebLoginController extends WebLoginControllerAssert implements WebL
 	 * @return
 	 * @throws Exception
 	 */
-	@PostMapping(path = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = "/login")
 	@Override
 	public ResponseEntity<?> loginUser(@RequestBody final DefaultRequest defaultRequestForm, final WebRequest request) throws Exception {
 		
@@ -114,7 +117,7 @@ public class WebLoginController extends WebLoginControllerAssert implements WebL
 	 * @return
 	 * @throws Exception
 	 */
-	@GetMapping(path = "/recover", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/recover")
 	@Override
 	public ResponseEntity<?> recoverUser(@RequestParam("userName") final String userName, final WebRequest request) throws Exception {
 		
@@ -143,7 +146,7 @@ public class WebLoginController extends WebLoginControllerAssert implements WebL
 	 * @return
 	 * @throws Exception
 	 */
-	@DeleteMapping(path = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(path = "/delete")
 	@Override
 	public ResponseEntity<?> deleteUser( @RequestBody final DefaultRequest defaultRequestForm, final WebRequest request) throws Exception {
 		

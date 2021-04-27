@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties
 public class YmlConfig {
 
-	String propFilePath;
+	private String propFilePath;
 
 	public String getPropFilePath() {
 		return propFilePath;
