@@ -1,0 +1,18 @@
+#for 'INT' profile only 
+spring:
+  profiles:
+    active:
+    - INT    
+server:  port: 8083
+   
+#for 'prod' profile only 
+--- 
+spring:
+  profiles:
+    active:
+    - PROD, prod
+ 
+
+  
+  
+  
