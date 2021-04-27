@@ -59,7 +59,7 @@ public class WebLoginController extends WebLoginControllerAssert implements WebL
 		DefaultReponse signUpReponse = null;
 		
 		try {
-			preValidation(defaultRequestForm.getUserName(), defaultRequestForm.getPassword());
+			super.preValidation(defaultRequestForm.getUserName(), defaultRequestForm.getPassword());
 			logger.info(MessageFormat.format("SignUp process started for:{0}", defaultRequestForm.getUserName()));
 			userLoginValidator.save(defaultRequestForm.getUserName(), defaultRequestForm.getPassword());
 			signUpReponse  = new DefaultReponse(new Date(), "User Account created successfully", HttpStatus.CREATED.getReasonPhrase());
@@ -90,7 +90,7 @@ public class WebLoginController extends WebLoginControllerAssert implements WebL
 		DefaultReponse loginReponse = null;
 
 		try {
-			preValidation(defaultRequestForm.getUserName(), defaultRequestForm.getPassword());
+			super.preValidation(defaultRequestForm.getUserName(), defaultRequestForm.getPassword());
 			logger.info(MessageFormat.format("Login process started for:{0}", defaultRequestForm.getUserName()));
 			if (userLoginValidator.login(defaultRequestForm.getUserName(), defaultRequestForm.getPassword())) {
 				loginReponse = new DefaultReponse(new Date(), "Welcome back user : " + defaultRequestForm.getUserName(), HttpStatus.ACCEPTED.getReasonPhrase());
@@ -121,7 +121,7 @@ public class WebLoginController extends WebLoginControllerAssert implements WebL
 		PasswordRecoverResponse passwordRecoverResponse = null;
 		
 		try {
-			preValidation(userName);
+			super.preValidation(userName);
 			logger.info(MessageFormat.format("Recover  process started for:{0}", userName));
 			passwordRecoverResponse = new PasswordRecoverResponse(new Date(), userLoginValidator.recover(userName));
 			logger.info(MessageFormat.format("Recover  process completed for:{0}", userName));
@@ -150,7 +150,7 @@ public class WebLoginController extends WebLoginControllerAssert implements WebL
 		DefaultReponse deleteRespose = null;
 		
 		try {
-			preValidation(defaultRequestForm.getUserName(), defaultRequestForm.getPassword());
+			super.preValidation(defaultRequestForm.getUserName(), defaultRequestForm.getPassword());
 			logger.info(MessageFormat.format("Delete  process started for:{0}", defaultRequestForm.getUserName()));
 			if (userLoginValidator.login(defaultRequestForm.getUserName(), defaultRequestForm.getPassword())) {
 				
