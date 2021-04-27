@@ -1,6 +1,6 @@
 package com.spring.security.jwt.pojo;
 
-public class DefaultRequestForm {
+public class DefaultRequest {
 
 	private String userName;
 	private String password;

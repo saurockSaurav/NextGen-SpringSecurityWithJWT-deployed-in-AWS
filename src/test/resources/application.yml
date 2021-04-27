@@ -1,0 +1,7 @@
+nextgen:
+    jwt:
+      prop-file-path: src/test/resources/UsersLog.properties
+
+  
+  
+  

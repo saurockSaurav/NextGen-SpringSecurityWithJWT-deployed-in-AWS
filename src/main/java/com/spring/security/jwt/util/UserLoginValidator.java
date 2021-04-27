@@ -11,22 +11,17 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.spring.security.jwt.config.YmlConfig;
 
 @Repository
 public class UserLoginValidator implements UserLoginValidatable {
 
-	// @Value("${user.login.file}")
-	private String propFileLocation = "src/main/resources/UsersLog.properties";
-	
-	
-	static Properties loadPropFile() throws FileNotFoundException, IOException {
-		InputStream input = new FileInputStream("src/main/resources/UsersLog.properties");
-		Properties prop = new Properties();
-		prop.load(input);
-		return prop;
-	}
-
+	 @Autowired
+	 private YmlConfig  YmlConfig;
+	 
 	/***
 	 * 
 	 * @param userName
@@ -43,7 +38,7 @@ public class UserLoginValidator implements UserLoginValidatable {
 		}
 
 		final Properties properties = new Properties();
-		try (OutputStream outputStream = new FileOutputStream(propFileLocation, true)) {
+		try (OutputStream outputStream = new FileOutputStream(YmlConfig.getPropFilePath(), true)) {
 			properties.setProperty(userName, password);
 			properties.store(outputStream, null);
 		} catch (Exception e) {
@@ -59,7 +54,7 @@ public class UserLoginValidator implements UserLoginValidatable {
 	 */
 	public boolean login(final String userName, final String passwordEnteredByUser) throws IOException {
 
-		final Properties properties = getPropertiesFileValues(propFileLocation);
+		final Properties properties = getPropertiesFileValues(YmlConfig.getPropFilePath());
 
 		String passwordRetrivedFromBackend = properties.getProperty(userName);
 
@@ -96,7 +91,7 @@ public class UserLoginValidator implements UserLoginValidatable {
 	
 	private final void deleteByUserNameAndPassword(final String userName, final String password) throws IllegalArgumentException, IOException {
 
-		File myFile = new File(propFileLocation);
+		File myFile = new File(YmlConfig.getPropFilePath());
 		Properties properties = new Properties();
 		properties.load(new FileInputStream(myFile));
 		properties.remove(userName, password);
@@ -108,7 +103,7 @@ public class UserLoginValidator implements UserLoginValidatable {
 	private final String recoverPasswordByUserName(final String userName) throws IllegalArgumentException, IOException {
 
 		String password = null;
-		InputStream input = new FileInputStream(propFileLocation);
+		InputStream input = new FileInputStream(YmlConfig.getPropFilePath());
 		Properties prop = new Properties();
 		prop.load(input);
 
@@ -127,8 +122,10 @@ public class UserLoginValidator implements UserLoginValidatable {
 	}
 
 	private final void checkUserNameAvailability(String userName) throws IllegalArgumentException, IOException {
-
-		Properties prop = loadPropFile();
+			
+		InputStream input = new FileInputStream(YmlConfig.getPropFilePath());
+		Properties prop = new Properties();
+		prop.load(input);
 		prop.keySet().forEach(x -> doesUserNameExist(x, userName));
 
 	}

@@ -1,18 +1,4 @@
-#for 'INT' profile only 
+##Stuffs thats common for all environmentsnextgen:  jwt:    prop-file-path: src/main/resources/UsersLog.properties
+---#for 'INT' profile only 
 spring:
-  profiles:
-    active:
-    - INT    
-server:  port: 8083
-   
-#for 'prod' profile only 
---- 
-spring:
-  profiles:
-    active:
-    - PROD, prod
- 
-
-  
-  
-  
+  config:    activate:      on-profile: INTserver:  port: 8083---spring:  config:    activate:      on-profile: PRODserver:  port: 8084  

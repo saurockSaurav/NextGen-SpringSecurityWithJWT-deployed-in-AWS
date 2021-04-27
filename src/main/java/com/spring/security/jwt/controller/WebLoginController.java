@@ -22,18 +22,19 @@ import org.springframework.web.context.request.WebRequest;
 
 import com.spring.security.jwt.exception.CustomizedExceptionHandler;
 import com.spring.security.jwt.pojo.DefaultReponse;
-import com.spring.security.jwt.pojo.DefaultRequestForm;
+import com.spring.security.jwt.pojo.DefaultRequest;
 import com.spring.security.jwt.pojo.PasswordRecoverResponse;
 import com.spring.security.jwt.util.UserLoginValidator;
 
-@RestController
-@RequestMapping("v1/nextcitizen")
+
 /**
  * 
  * @author SauravSaurock
  * Date: April, 2021
  *
  */
+@RestController
+@RequestMapping("v1/nextcitizen")
 public class WebLoginController extends WebLoginControllerAssert implements WebLoginControllable {
 	
 	private static final Logger logger = LogManager.getLogger(WebLoginController.class);
@@ -54,7 +55,7 @@ public class WebLoginController extends WebLoginControllerAssert implements WebL
 	 */
 	@PutMapping(path = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
 	@Override
-	public ResponseEntity<?> signUpUser( @RequestBody final DefaultRequestForm defaultRequestForm, final WebRequest request) throws Exception {
+	public ResponseEntity<?> signUpUser( @RequestBody final DefaultRequest defaultRequestForm, final WebRequest request) throws Exception {
 		DefaultReponse signUpReponse = null;
 		
 		try {
@@ -84,7 +85,7 @@ public class WebLoginController extends WebLoginControllerAssert implements WebL
 	 */
 	@PostMapping(path = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
 	@Override
-	public ResponseEntity<?> loginUser(@RequestBody final DefaultRequestForm defaultRequestForm, final WebRequest request) throws Exception {
+	public ResponseEntity<?> loginUser(@RequestBody final DefaultRequest defaultRequestForm, final WebRequest request) throws Exception {
 		
 		DefaultReponse loginReponse = null;
 
@@ -144,7 +145,7 @@ public class WebLoginController extends WebLoginControllerAssert implements WebL
 	 */
 	@DeleteMapping(path = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
 	@Override
-	public ResponseEntity<?> deleteUser( @RequestBody final DefaultRequestForm defaultRequestForm, final WebRequest request) throws Exception {
+	public ResponseEntity<?> deleteUser( @RequestBody final DefaultRequest defaultRequestForm, final WebRequest request) throws Exception {
 		
 		DefaultReponse deleteRespose = null;
 		

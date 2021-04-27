@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
-import com.spring.security.jwt.pojo.DefaultRequestForm;
+import com.spring.security.jwt.pojo.DefaultRequest;
 
 public interface WebLoginControllable {
 
@@ -17,7 +17,7 @@ public interface WebLoginControllable {
 	 * @return
 	 * @throws Exception
 	 */
-	ResponseEntity<?> signUpUser( @RequestBody final DefaultRequestForm defaultRequestForm, final WebRequest request) throws Exception;
+	ResponseEntity<?> signUpUser( @RequestBody final DefaultRequest defaultRequestForm, final WebRequest request) throws Exception;
 	
 	/**
 	 * takes user request to login into account using existing user account.
@@ -26,7 +26,7 @@ public interface WebLoginControllable {
 	 * @return
 	 * @throws Exception
 	 */
-	ResponseEntity<?> loginUser( @RequestBody final DefaultRequestForm defaultRequestForm, 
+	ResponseEntity<?> loginUser( @RequestBody final DefaultRequest defaultRequestForm, 
 											  final WebRequest request) throws Exception;
 	
 	
@@ -48,7 +48,7 @@ public interface WebLoginControllable {
 	 * @return
 	 * @throws Exception
 	 */
-	ResponseEntity<?> deleteUser( @RequestBody final DefaultRequestForm defaultRequestForm, 
+	ResponseEntity<?> deleteUser( @RequestBody final DefaultRequest defaultRequestForm, 
 											   final WebRequest request) throws Exception;
 	
 	
