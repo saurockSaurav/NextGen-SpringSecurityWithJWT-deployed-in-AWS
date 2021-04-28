@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public interface UserLoginValidatable {
 
-	void save(String userName, String password) throws IOException;
+	void save(String userName, String password) throws Exception;
 
 	boolean login(final String userName, final String passwordEnteredByUser) throws IOException;
 

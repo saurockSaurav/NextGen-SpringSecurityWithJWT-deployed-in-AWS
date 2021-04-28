@@ -27,23 +27,11 @@ public class UserLoginValidator implements UserLoginValidatable {
 	 * @param userName
 	 * @param password
 	 * @return
-	 * @throws IOException
+	 * @throws Exception 
 	 */
-	public void save(String userName, String password) throws IOException {
+	public void save(String userName, String password) throws Exception {
 
-		try {
-			checkUserNameAvailability(userName);
-		} catch (IllegalArgumentException ex) {
-			throw ex;
-		}
-
-		final Properties properties = new Properties();
-		try (OutputStream outputStream = new FileOutputStream(YmlConfig.getPropFilePath(), true)) {
-			properties.setProperty(userName, password);
-			properties.store(outputStream, null);
-		} catch (Exception e) {
-			throw e;
-		}
+		saveUserData(userName, password);
 	}
 
 	/**
@@ -54,16 +42,7 @@ public class UserLoginValidator implements UserLoginValidatable {
 	 */
 	public boolean login(final String userName, final String passwordEnteredByUser) throws IOException {
 
-		final Properties properties = getPropertiesFileValues(YmlConfig.getPropFilePath());
-
-		String passwordRetrivedFromBackend = properties.getProperty(userName);
-
-		if (Optional.ofNullable(passwordRetrivedFromBackend).isPresent() && passwordRetrivedFromBackend.equals(passwordEnteredByUser)) {
-			return true;
-
-		} else {
-			throw new IllegalArgumentException("UserName doesnot exist in the system. Check your input.");
-		}
+		return loginUser(userName, passwordEnteredByUser);
 
 	}
 
@@ -89,17 +68,36 @@ public class UserLoginValidator implements UserLoginValidatable {
 		deleteByUserNameAndPassword(username, password);
 	}
 	
-	private final void deleteByUserNameAndPassword(final String userName, final String password) throws IllegalArgumentException, IOException {
+	
+	private void saveUserData(String userName, String password) throws IOException, Exception {
+		try {
+			checkUserNameAvailability(userName);
+		} catch (IllegalArgumentException ex) {
+			throw ex;
+		}
 
-		File myFile = new File(YmlConfig.getPropFilePath());
-		Properties properties = new Properties();
-		properties.load(new FileInputStream(myFile));
-		properties.remove(userName, password);
-		OutputStream out = new FileOutputStream(myFile);
-		properties.store(out, null);
+		final Properties properties = new Properties();
+		try (OutputStream outputStream = new FileOutputStream(YmlConfig.getPropFilePath(), true)) {
+			properties.setProperty(userName, password);
+			properties.store(outputStream, null);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
-
+	private boolean loginUser(final String userName, final String passwordEnteredByUser) throws IOException {
 		
+		final Properties properties = getPropertiesFileValues(YmlConfig.getPropFilePath());
+
+		String enCryptedPassword = properties.getProperty(userName);
+
+		if (Optional.ofNullable(enCryptedPassword).isPresent() && passwordEnteredByUser.equals(enCryptedPassword)) {
+			return true;
+
+		} else {
+			throw new IllegalArgumentException("UserName doesnot exist in the system. Check your input.");
+		}
+	}
+	
 	private final String recoverPasswordByUserName(final String userName) throws IllegalArgumentException, IOException {
 
 		String password = null;
@@ -109,7 +107,7 @@ public class UserLoginValidator implements UserLoginValidatable {
 
 		for (Object val : prop.keySet()) {
 			if (((String) val).equalsIgnoreCase(userName)) {
-				password = prop.getProperty(userName);
+				password =prop.getProperty(userName);
 			}
 		}
 		if (Objects.isNull(password)) {
@@ -120,6 +118,17 @@ public class UserLoginValidator implements UserLoginValidatable {
 		}
 
 	}
+	
+	private final void deleteByUserNameAndPassword(final String userName, final String password) throws IllegalArgumentException, IOException {
+
+		File myFile = new File(YmlConfig.getPropFilePath());
+		Properties properties = new Properties();
+		properties.load(new FileInputStream(myFile));
+		properties.remove(userName, password);
+		OutputStream out = new FileOutputStream(myFile);
+		properties.store(out, null);
+	}
+
 
 	private final void checkUserNameAvailability(String userName) throws IllegalArgumentException, IOException {
 			
