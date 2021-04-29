@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.springframework.ide.eclipse.boot.launch">
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_ATTR_USE_ARGFILE" value="false"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_SHOW_CODEDETAILS_IN_EXCEPTION_MESSAGES" value="true"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
+    <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.springframework.ide.eclipse.boot.launch.BootMavenClassPathProvider"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.spring.security.jwt.NextGenSpringSecurityJwtApplication"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="NextGen-Spring-Security-Example"/>
+    <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.springframework.ide.eclipse.boot.launch.BootMavenSourcePathProvider"/>
+    <booleanAttribute key="spring.boot.ansi.console" value="true"/>
+    <stringAttribute key="spring.boot.app.properties" value=""/>
+    <booleanAttribute key="spring.boot.dash.hidden" value="false"/>
+    <booleanAttribute key="spring.boot.debug.enable" value="false"/>
+    <booleanAttribute key="spring.boot.fast.startup" value="true"/>
+    <booleanAttribute key="spring.boot.jmx.enable" value="true"/>
+    <booleanAttribute key="spring.boot.lifecycle.enable" value="true"/>
+    <stringAttribute key="spring.boot.lifecycle.termination.timeout" value="15000"/>
+    <booleanAttribute key="spring.boot.livebean.enable" value="false"/>
+    <stringAttribute key="nextgen.jwt.username" value="admin"/>
+	<stringAttribute key="nextgen.jwt.password" value="eyJhbGciOiJIUzI1NiJ9"/>
+    <stringAttribute key="spring.boot.livebean.port" value="0"/>
+    <stringAttribute key="spring.boot.profile" value="PROD"/>
+	
+</launchConfiguration>
