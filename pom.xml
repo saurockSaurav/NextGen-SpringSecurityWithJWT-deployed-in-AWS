@@ -9,10 +9,10 @@
 		<version>2.4.5</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>NextGen-Spring-Security-Example</groupId>
-	<artifactId>NextGen-Spring-Security-Example</artifactId>
-	<version>1.1.1-SNAPSHOT</version>
-	<name>NextGen-Spring-Security-JWT-Example</name>
+	<groupId>NextGen-Spring-Security-With-JWT</groupId>
+	<artifactId>NextGen-Spring-Security-With-JWT</artifactId>
+	<version>1.1.2-SNAPSHOT</version>
+	<name>NextGen-Spring-Security-With-JWT</name>
 	<description>Demo project for Spring-Security-with-JWT-Example</description>
 	<properties>
 		<java.version>1.8</java.version>
