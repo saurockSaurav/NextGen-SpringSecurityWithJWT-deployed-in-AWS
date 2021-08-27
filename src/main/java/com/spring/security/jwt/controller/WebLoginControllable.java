@@ -17,7 +17,9 @@ public interface WebLoginControllable {
 	 * @return
 	 * @throws Exception
 	 */
-	ResponseEntity<?> signUpUser( @RequestBody final DefaultRequest defaultRequestForm, final WebRequest request) throws Exception;
+	ResponseEntity<?> signUpUser( @RequestBody final DefaultRequest defaultRequestForm, 
+								  @RequestParam("excludePwdPolicy") boolean  excludePwdPolicy,
+								  final WebRequest request ) throws Exception;
 	
 	/**
 	 * takes user request to login into account using existing user account.
@@ -37,8 +39,7 @@ public interface WebLoginControllable {
 	 * @return
 	 * @throws Exception
 	 */
-	ResponseEntity<?> recoverUser( @RequestParam("userName") final String userName,
-																 final WebRequest request) throws Exception;
+	ResponseEntity<?> recoverUser( @RequestParam("userName") final String userName, final WebRequest request) throws Exception;
 	
 	
 	/**

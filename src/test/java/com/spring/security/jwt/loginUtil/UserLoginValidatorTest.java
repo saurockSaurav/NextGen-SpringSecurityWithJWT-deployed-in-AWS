@@ -1,9 +1,10 @@
 package com.spring.security.jwt.loginUtil;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -19,13 +20,13 @@ import com.spring.security.jwt.util.UserLoginValidator;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { UserLoginValidator.class, YmlConfig.class })
 public class UserLoginValidatorTest {
-	
+
 	@Mock
-	private YmlConfig		ymlConfig;
-	
+	private YmlConfig ymlConfig;
+
 	@Autowired
 	private UserLoginValidator userLoginValidator;
-	
+
 	@Before
 	public void stetUp() {
 		when(ymlConfig.getPropFilePath()).thenReturn("src/test/resources/UsersLog.properties");
@@ -33,7 +34,15 @@ public class UserLoginValidatorTest {
 
 	@Test
 	public void testWhen_UserLogin_All_UseCases() throws IOException {
-		//assertThat(userLoginValidator.login("Username1", "Password1")).isFalse();
-		//assertThat(userLoginValidator.login("Username2", "Password1")).isFalse();
+		// assertThat(userLoginValidator.login("Username1", "Password1")).isFalse();
+		// assertThat(userLoginValidator.login("Username2", "Password1")).isFalse();
+	}
+
+	@Test
+	public void testTwoDigit() {
+		Map<String,String> exceptionToCode = new HashMap<>();
+		//addTwoDigits(11);
+
 	}
 }
+

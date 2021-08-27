@@ -32,6 +32,7 @@ public class AuthenticationController {
 	@Autowired
 	private MyUserDetailsService userDetailsService;
 
+	///Endpoint: http://localhost:8080/v1/token?userName=admin&password=eyJhbGciOiJIUzI1NiJ9
 	@RequestMapping(value = "/v1/token", method = RequestMethod.GET)
 	public ResponseEntity<?> createAuthenticationToken( @RequestParam("userName") final String userName, 
 														@RequestParam("password") final String password) throws Exception {
