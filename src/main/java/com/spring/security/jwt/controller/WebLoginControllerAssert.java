@@ -38,7 +38,6 @@ public class WebLoginControllerAssert extends PasswordRules {
 
 		Assert.hasLength(password, "Password cannot be null or empty");
 
-		Assert.isTrue(isValidPassword(password), "Password didnot meet Password Policy and Guidelines. It must be mix of :  ^(?=.*\\\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}$");
 	}
 
 }

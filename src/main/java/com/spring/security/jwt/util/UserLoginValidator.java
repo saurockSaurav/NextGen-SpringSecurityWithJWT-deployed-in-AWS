@@ -38,9 +38,9 @@ public class UserLoginValidator implements UserLoginValidatable {
 	 * 
 	 * @param userName
 	 * @return
-	 * @throws IOException
+	 * @throws Exception 
 	 */
-	public boolean login(final String userName, final String passwordEnteredByUser) throws IOException {
+	public boolean login(final String userName, final String passwordEnteredByUser) throws Exception {
 
 		return loginUser(userName, passwordEnteredByUser);
 
@@ -78,23 +78,25 @@ public class UserLoginValidator implements UserLoginValidatable {
 
 		final Properties properties = new Properties();
 		try (OutputStream outputStream = new FileOutputStream(YmlConfig.getPropFilePath(), true)) {
-			properties.setProperty(userName, password);
+			properties.setProperty(userName, CryptPassword.conversion(password, true));
 			properties.store(outputStream, null);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
-	private boolean loginUser(final String userName, final String passwordEnteredByUser) throws IOException {
+	private boolean loginUser(final String userName, final String passwordEnteredByUser) throws Exception {
 		
 		final Properties properties = getPropertiesFileValues(YmlConfig.getPropFilePath());
-
-		String enCryptedPassword = properties.getProperty(userName);
-
-		if (Optional.ofNullable(enCryptedPassword).isPresent() && passwordEnteredByUser.equals(enCryptedPassword)) {
+		
+		String encryptdPassword = properties.getProperty(userName);
+		
+		String decryptdPassword = CryptPassword.conversion(encryptdPassword, false);
+	
+		if (decryptdPassword.equals(passwordEnteredByUser)) {
 			return true;
 
 		} else {
-			throw new IllegalArgumentException("UserName doesnot exist in the system. Check your input.");
+			throw new IllegalArgumentException("UserName or password doesn't match. Check your input !");
 		}
 	}
 	
@@ -169,5 +171,6 @@ public class UserLoginValidator implements UserLoginValidatable {
 		}
 		return prop;
 	}
+	
 
 }

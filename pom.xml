@@ -18,6 +18,12 @@
 		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/com.github.pandachanv587/aes-util -->
+	<dependency>
+	    <groupId>com.github.pandachanv587</groupId>
+	    <artifactId>aes-util</artifactId>
+	    <version>1.0.0</version>
+	</dependency>
 	<!-- https://mvnrepository.com/artifact/org.passay/passay -->
 	<dependency>
 		<groupId>org.passay</groupId>

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +29,6 @@ import com.spring.security.jwt.pojo.DefaultRequest;
 import com.spring.security.jwt.pojo.PasswordRecoverResponse;
 import com.spring.security.jwt.util.UserLoginValidator;
 import com.spring.security.password.policy.BadInputChoiceException;
-
-import io.jsonwebtoken.lang.Assert;
 
 
 /**
@@ -104,7 +103,7 @@ public class WebLoginController extends WebLoginControllerAssert implements WebL
 
 		try {
 			
-			super.validateUnameAndPwd(defaultRequestForm.getUserName(), defaultRequestForm.getPassword(), false);
+			super.validateUnameAndPwd(defaultRequestForm.getUserName(), defaultRequestForm.getPassword());
 			
 			logger.info(MessageFormat.format("Login process started for:{0}", defaultRequestForm.getUserName()));
 			if (userLoginValidator.login(defaultRequestForm.getUserName(), defaultRequestForm.getPassword())) {
@@ -115,7 +114,7 @@ public class WebLoginController extends WebLoginControllerAssert implements WebL
 			logger.error(MessageFormat.format("Error occured during Login process for user:{0} - cause- {1}", defaultRequestForm.getUserName(), e.getMessage()));
 			return customizedExceptionHandler.handleBadRequestException(e, request);
 		} catch (Exception e) {
-			logger.error(MessageFormat.format("Error occured during Login process for user:{0} - cause- {1}", defaultRequestForm.getUserName(), e.getMessage()));
+			logger.error(MessageFormat.format("Error occured during Login process for user:{0} - cause- {1}", defaultRequestForm.getUserName(), e));
 			return customizedExceptionHandler.handleInternalServerException(e, request);
 		}
 		return new ResponseEntity<DefaultReponse>(loginReponse, HttpStatus.CREATED);
