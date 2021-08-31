@@ -27,25 +27,29 @@ public class CryptPassword {
      
 	public static String conversion(String str, boolean isRequestToEncrypt) throws Exception {
 		
-		EncryptorAesGcm.testEnDeCrypt(str);
-		
-        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-        keyGenerator.init(AES_KEY_SIZE);
-
-        // Generate Key
-        SecretKey key = keyGenerator.generateKey();
-
-        byte[] IV = new byte[GCM_IV_LENGTH];
-        SecureRandom random = new SecureRandom();
-        random.nextBytes(IV);
-        byte[] cipherText = encrypt(str.getBytes(), key, IV);
-        
-        if(Objects.nonNull(str) && isRequestToEncrypt) {
-        	return Base64.getEncoder().encodeToString(cipherText);
-        }
-        else {
-        	return decrypt(str.getBytes(), key, IV);
-        }
+		if(isRequestToEncrypt) {
+		return EncryptorAesGcm.testEnDeCrypt(str, true);
+		}
+		else {
+			return EncryptorAesGcm.testEnDeCrypt(str, false);
+		}
+//        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+//        keyGenerator.init(AES_KEY_SIZE);
+//
+//        // Generate Key
+//        SecretKey key = keyGenerator.generateKey();
+//
+//        byte[] IV = new byte[GCM_IV_LENGTH];
+//        SecureRandom random = new SecureRandom();
+//        random.nextBytes(IV);
+//        byte[] cipherText = encrypt(str.getBytes(), key, IV);
+//        
+//        if(Objects.nonNull(str) && isRequestToEncrypt) {
+//        	return Base64.getEncoder().encodeToString(cipherText);
+//        }
+//        else {
+//        	return decrypt(str.getBytes(), key, IV);
+//        }
 		
     }
 

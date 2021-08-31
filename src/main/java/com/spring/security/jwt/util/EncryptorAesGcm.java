@@ -73,31 +73,36 @@ public class EncryptorAesGcm {
 
     }
 
-    public static void testEnDeCrypt(String pText) throws Exception {
+	public static String testEnDeCrypt(String pText, boolean isEncrypt) throws Exception {
 
-        String OUTPUT_FORMAT = "%-30s:%s";
+		String OUTPUT_FORMAT = "%-30s:%s";
 
-        // encrypt and decrypt need the same key.
-        // get AES 256 bits (32 bytes) key
-        SecretKey secretKey = CryptoUtils.getAESKey(AES_KEY_BIT);
+		// encrypt and decrypt need the same key.
+		// get AES 256 bits (32 bytes) key
+		SecretKey secretKey = CryptoUtils.getAESKey(AES_KEY_BIT);
 
-        // encrypt and decrypt need the same IV.
-        // AES-GCM needs IV 96-bit (12 bytes)
-        byte[] iv = CryptoUtils.getRandomNonce(IV_LENGTH_BYTE);
+		// encrypt and decrypt need the same IV.
+		// AES-GCM needs IV 96-bit (12 bytes)
+		byte[] iv = CryptoUtils.getRandomNonce(IV_LENGTH_BYTE);
 
-        byte[] encryptedText = EncryptorAesGcm.encryptWithPrefixIV(pText.getBytes(UTF_8), secretKey, iv);
+		if (isEncrypt) {
+			byte[] encryptedText = EncryptorAesGcm.encryptWithPrefixIV(pText.getBytes(UTF_8), secretKey, iv);
+			System.out.println("\n------ AES GCM Encryption ------");
+			System.out.println(String.format(OUTPUT_FORMAT, "Input (plain text)", pText));
+			System.out.println(String.format(OUTPUT_FORMAT, "Encrypted (hex) (block = 16)", CryptoUtils.hexWithBlockSize(encryptedText, 16)));
+			return CryptoUtils.hexWithBlockSize(encryptedText, 16);
+			
+		} else {
+			String decryptedText = EncryptorAesGcm.decrypt(pText.getBytes(UTF_8), secretKey, iv);
+			System.out.println("\n------ AES GCM Decryption ------");
+			System.out.println(decryptedText);
+			System.out.println(String.format(OUTPUT_FORMAT, "Key (hex)", CryptoUtils.hex(secretKey.getEncoded())));
+			//String decryptedText02 = EncryptorAesGcm.decryptWithPrefixIV(decryptedText, secretKey);
+			System.out.println(String.format(OUTPUT_FORMAT, "Decrypted (plain text)", decryptedText));
+			return decryptedText;
 
-        System.out.println("\n------ AES GCM Encryption ------");
-        System.out.println(String.format(OUTPUT_FORMAT, "Input (plain text)", pText));
-        System.out.println(String.format(OUTPUT_FORMAT, "Encrypted (hex) (block = 16)", CryptoUtils.hexWithBlockSize(encryptedText, 16)));
-
-        System.out.println("\n------ AES GCM Decryption ------");
-        System.out.println(String.format(OUTPUT_FORMAT, "Key (hex)", CryptoUtils.hex(secretKey.getEncoded())));
-
-        String decryptedText = EncryptorAesGcm.decryptWithPrefixIV(encryptedText, secretKey);
-
-        System.out.println(String.format(OUTPUT_FORMAT, "Decrypted (plain text)", decryptedText));
-
+		}
+        
     }
 
 }

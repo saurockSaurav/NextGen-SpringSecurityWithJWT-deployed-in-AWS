@@ -102,9 +102,7 @@ public class WebLoginController extends WebLoginControllerAssert implements WebL
 		DefaultReponse loginReponse = null;
 
 		try {
-			
 			super.validateUnameAndPwd(defaultRequestForm.getUserName(), defaultRequestForm.getPassword());
-			
 			logger.info(MessageFormat.format("Login process started for:{0}", defaultRequestForm.getUserName()));
 			if (userLoginValidator.login(defaultRequestForm.getUserName(), defaultRequestForm.getPassword())) {
 				loginReponse = new DefaultReponse(new Date(), "Welcome back user : " + defaultRequestForm.getUserName(), HttpStatus.ACCEPTED.getReasonPhrase());

@@ -8,11 +8,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import com.spring.security.jwt.config.YmlConfig;
 
@@ -78,27 +80,33 @@ public class UserLoginValidator implements UserLoginValidatable {
 
 		final Properties properties = new Properties();
 		try (OutputStream outputStream = new FileOutputStream(YmlConfig.getPropFilePath(), true)) {
-			properties.setProperty(userName, CryptPassword.conversion(password, true));
+			
+			BCryptPasswordEncoder obj = new BCryptPasswordEncoder();
+			properties.setProperty(userName, obj.encode(password));
 			properties.store(outputStream, null);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
-	private boolean loginUser(final String userName, final String passwordEnteredByUser) throws Exception {
-		
-		final Properties properties = getPropertiesFileValues(YmlConfig.getPropFilePath());
-		
-		String encryptdPassword = properties.getProperty(userName);
-		
-		String decryptdPassword = CryptPassword.conversion(encryptdPassword, false);
 	
-		if (decryptdPassword.equals(passwordEnteredByUser)) {
-			return true;
+	private boolean loginUser(final String userName, final String rawPwd) throws Exception {
 
-		} else {
-			throw new IllegalArgumentException("UserName or password doesn't match. Check your input !");
-		}
+		final Properties properties = getPropertiesFileValues(YmlConfig.getPropFilePath());
+
+		final String encodedPwd = properties.getProperty(userName);
+
+		Assert.isTrue(StringUtils.hasText(encodedPwd), "Username not found");
+
+		final BCryptPasswordEncoder cryptPasswordEncoder = new BCryptPasswordEncoder();
+
+		final boolean doesMatches = cryptPasswordEncoder.matches(rawPwd, encodedPwd);
+
+		Assert.isTrue(doesMatches, "Password is incorrect. try again !");
+
+		return doesMatches;
 	}
+	
+	
 	
 	private final String recoverPasswordByUserName(final String userName) throws IllegalArgumentException, IOException {
 
